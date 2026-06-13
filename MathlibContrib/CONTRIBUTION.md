@@ -7,8 +7,13 @@ identity, a public review queue) — this package takes it up to that line.
 
 `MathlibContrib/Green.lean` — **Green's relations on a monoid** (`𝓡 𝓛 𝓙 𝓗`), the
 fundamental tool of semigroup theory, **confirmed absent from Mathlib** (direct
-master audit, REGISTRY R4: no Green's relations anywhere). Sorry-free, 160 lines,
-compiles cleanly against Mathlib with **zero linter warnings**.
+master audit, REGISTRY R4: no Green's relations anywhere). Sorry-free, 160 lines.
+**Port-verified 2026-06-13**: builds cleanly against **Mathlib v4.30.0** (the latest
+stable, one release past the v4.29.1 it was written on) with **zero changes**, and
+`lake exe runLinter GreenPort.Green` reports **"Linting passed"** — so the file uses
+only stable core API (`map_mul`, `Prod.fst_mul`, `Submonoid`) and the drift to master
+is expected to be nil. (Verification project: a minimal Lake package requiring
+mathlib @ v4.30.0; not committed here.)
 
 Contents: the three Green preorders (`RLe/LLe/JLe`) with reflexivity/transitivity;
 the four equivalences (`R/L/J/H`) with `Equivalence` proofs; basic containments
@@ -60,26 +65,26 @@ call). Add the import to `Mathlib.lean`.
 >   functoriality + closure of 𝓙-triviality under finite products and submonoids.
 >
 > Follow-up planned: the syntactic monoid of a language, and (longer-term) Simon's
-> theorem. Sorry-free; lint-clean.
+> theorem. Sorry-free; builds + lints clean against Mathlib v4.30.0.
+
+(See `NAMING.md` for the naming/generality decisions to settle on the Zulip thread.)
 
 ## Pre-submission checklist (do these before opening the PR)
 
-- [ ] **Port to current Mathlib master.** This file is verified against `v4.29.1`.
-      Fork master, drop the file in, fix any API drift (names like `Prod.ext`,
-      `Prod.fst_mul`, `map_mul` are stable, but re-check).
+- [x] **Port to current Mathlib.** Verified against `v4.30.0` (latest stable) — builds
+      with **zero changes**. Re-confirm against literal master at PR time (trivial:
+      file uses only stable core API).
+- [x] **Run linters.** `lake exe runLinter GreenPort.Green` → "Linting passed" against
+      v4.30.0. All `def`s docstringed.
+- [x] **Authorship & copyright.** Header set to David Johnson with the `Authors:` line.
 - [ ] **Search for prior/competing work.** Mathlib PR search for "Green" /
       "Green's relations"; check Sam van Gool's Stone-duality formalization thread
       (it may touch adjacent material). Mention findings on Zulip.
-- [ ] **Run linters.** `lake exe runLinter Mathlib.Algebra.Group.Green` and address
-      any `#lint` output (docstrings present; check `simp`-normal forms, namespace).
-- [ ] **Naming review.** The `Green` namespace and `RLe/R/IsJTrivial` names are
-      proposals — expect (welcome) bikeshedding. Consider whether `𝓡`-style scoped
-      notation is wanted.
+- [ ] **Naming review.** See `NAMING.md` — `Green` namespace, `R/L/J/H` names, `𝓡`-style
+      scoped notation, and the tie to `· ∣ ·`/`Associated` are open; settle on Zulip.
 - [ ] **Generality.** Decide `Monoid` vs `Semigroup` (via `WithOne`) per the Zulip
       reply. The current statements are `Monoid`.
 - [ ] **Import index.** Add to `Mathlib.lean`.
-- [ ] **Authorship & copyright.** Replace the placeholder author line; copyright to
-      the actual contributor per Mathlib's CLA.
 - [ ] **Commit message** follows Mathlib convention (`feat(Algebra/Group): …`).
 
 ## Honest caveats
@@ -87,6 +92,8 @@ call). Add the import to `Mathlib.lean`.
 - As of 2026-06-13 the WHOLE library (incl. Simon's theorem) is sorry-free; this
   first PR is still scoped to just Green's relations as the cleanest opening move,
   with the syntactic monoid and Simon's theorem as planned follow-up PRs.
-- "Compiles clean against `v4.29.1`" — master may have drifted; the port step above
-  is required.
+- Port-verified against **v4.30.0**, not literal master — but the file uses only
+  stable core API, so the master delta is expected to be nil (re-check at PR time).
+- The naming/generality choices (`NAMING.md`) are provisional pending the Zulip
+  discussion — *don't* hard-finalize them before maintainers weigh in.
 - Acceptance is the maintainers' decision; this package only prepares the submission.
