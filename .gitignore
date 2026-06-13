@@ -1,0 +1,13 @@
+# Lake build artifacts (downloaded/built — not distributed)
+/.lake/
+**/.lake/
+*.olean
+*.ilean
+*.olean.tmp
+
+# editor / OS
+.DS_Store
+*.swp
+
+# dev scratch (not part of the library)
+*_progress.lean

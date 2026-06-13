@@ -1,0 +1,17 @@
+name = "DualityEngine"
+version = "0.1.0"
+keywords = ["formal-languages", "automata", "syntactic-monoid", "greens-relations"]
+description = "Green's relations and the syntactic monoid in Lean 4 (API absent from Mathlib)"
+defaultTargets = ["DualityEngine"]
+
+[leanOptions]
+pp.unicode.fun = true
+autoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.29.1"
+
+[[lean_lib]]
+name = "DualityEngine"
