@@ -1,6 +1,7 @@
 /-
-Copyright (c) 2026 DualityEngine contributors. All rights reserved.
+Copyright (c) 2026 David Johnson. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: David Johnson
 -/
 import DualityEngine.Green
 import DualityEngine.Syntactic
